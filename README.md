@@ -110,11 +110,11 @@
 
 ### 任务 1 — 拿起 ramekin 旁边的黑碗
 
-| A-F ✅ 成功 | D1 ✅ 成功 |
-|------------|-----------|
-| <video controls width="300" src="experiments/rollouts/2026_05_24/2026_05_24-18_01_39--episode=11--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4"></video> | <video controls width="300" src="experiments/rollouts/2026_05_24/2026_05_24-17_19_34--episode=11--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4"></video> |
+| A-F ✅ 成功（ep.16，完整抓取轨迹） | A-F ❌ 失败：末端抖动、未夹稳 | D1 ✅ 成功 |
+|-----------------------------------|------------------------------|-----------|
+| <video controls width="280" src="experiments/rollouts/2026_05_24/2026_05_24-18_01_39--episode=16--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4"></video> | <video controls width="280" src="experiments/rollouts/2026_05_24/2026_05_24-18_01_39--episode=13--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4"></video> | <video controls width="280" src="experiments/rollouts/2026_05_24/2026_05_24-17_19_34--episode=14--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4"></video> |
 
-*A-F 90% · D1 60% · 本子集中相对最容易的任务。*
+*A-F 该任务自动成功率 90%（9/10）· D1 60% · 本子集中相对最容易；但观感上仍有不少 trial 存在「臂不动 / 抖动」现象（见下文分析）。*
 
 ### 任务 2 — 拿起桌面中央的黑碗（最难）
 
@@ -129,6 +129,66 @@
 <video controls width="480" src="experiments/rollouts/2026_05_24/2026_05_24-18_33_30--episode=1--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4"></video>
 
 *30 个 episode 全部失败；3000 step 不足以学到可用的空间操作策略。*
+
+---
+
+## 失败模式与原因分析
+
+对 `20260522-eval` 共 **150** 个 rollout（5 模型 × 30 episode）逐条回看视频后，**多数失败并非「完全不会动」**，而是以下几类可重复出现的模式。自动成功率（LIBERO 环境判定）与**人眼观感**之间也存在明显差距。
+
+### 1. 机械臂几乎不动 / 动作幅度极小
+
+**现象：** 夹爪在画面中原地或近原地微动，数秒内不朝碗/盘运动，最终超时判失败。S3k、弱配置 D0 上最常见；部分 trial 虽被判 `success=True`，回放仍像「几乎没动」（我们已避免在 README 中选用这类「名义成功」片段）。
+
+**可能原因：**
+
+| 因素 | 说明 |
+|------|------|
+| 训练不足 | S3k 仅 3000 step，策略未学到有效 action 分布，输出接近零向量 |
+| 动作反归一化 | OpenVLA 对 7-DoF 动作做 dataset 统计反归一化；弱 checkpoint 易输出「保守」小幅度 |
+| 开环执行 | 每步推理一次、按 chunk 执行，误差累积后策略倾向于「不动保平安」 |
+
+<video controls width="480" src="experiments/rollouts/2026_05_24/2026_05_24-18_33_30--episode=5--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4"></video>
+
+*示例：S3k，任务 0 — 全程几乎无有效位移（0/30 总体失败）。*
+
+### 2. 末端抖动 / 高频小幅振荡
+
+**现象：** 机械臂或夹爪在固定位置附近快速抖动，有「耗电振」感，但不形成向目标的平滑接近；常伴随抓空、碰倒碗或 plate。
+
+**可能原因：**
+
+| 因素 | 说明 |
+|------|------|
+| 离散动作 token | 模型预测离散化 action token，逐步反量化后相邻步差异大，仿真中表现为抖动 |
+| LoRA 容量与 dropout | D1（dropout=0.1 + aug）在部分任务上 loss 尚可但控制不平滑 |
+| 无 temporal ensemble | 评测脚本未对多步预测做滤波，单步噪声直接下发仿真 |
+
+| D0 ❌ 抖动（任务 1） | D0 ❌ 接近目标但抓空 |
+|---------------------|---------------------|
+| <video controls width="300" src="experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=12--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4"></video> | <video controls width="300" src="experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=13--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4"></video> |
+
+### 3. 有运动但操作失败（抓空、碰翻、未入盘）
+
+**现象：** 臂有明显位移，但未夹住碗、打翻物体或放置偏移。任务 2（桌面中央）最多。
+
+**可能原因：** 精细对准要求高；弱模型在 depth / 空间关系上误差大；任务 2 成功率 S10k 仅 50%，其余约 10%。
+
+### 4. 训练配置与评测设置的影响
+
+| 观察 | 解释 |
+|------|------|
+| A-F、S10k 明显好于 D0/D1 | 关闭 `image_aug` 且评测 `center_crop=False` 与训练分布更一致 |
+| 任务 1 自动成功率高 | 碗距 ramekin 近、遮挡少；但视频中仍可见抖动类失败（见上 ep.13） |
+| 任务 2 普遍差 | 中央抓取 + 放置精度要求高，暴露控制稳定性问题 |
+| W&B loss 好 ≠ 仿真好 | 训练指标与 LIBERO 成功判据不对齐；需以 rollout 为准 |
+
+### 5. 小结与后续改进方向
+
+- **当前瓶颈：** 控制稳定性（抖动、停滞）> 纯感知；长训 + 关 aug 的 **S10k** 明显缓解，但未根除。
+- **建议尝试：** 动作平滑 / 滑动平均；增大 `num_open_loop_steps` 对比；全套 10 任务 × 更多 trial；可选 temporal ensembling；发布 checkpoint 供他人复现人类观感评测。
+
+> 完整数字与分任务表见 [`experiments/REPORT_libero_spatial_sweep_20260522.md`](experiments/REPORT_libero_spatial_sweep_20260522.md)。
 
 ---
 
