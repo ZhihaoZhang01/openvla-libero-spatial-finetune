@@ -45,18 +45,15 @@
 
 *任务：拿起黑碗并放到盘子上。基座模型有动作意图，但成功率很低。*
 
-### 训练曲线（冒烟阶段 — 请插入你的截图）
+### 训练曲线（冒烟阶段）
 
-| 图表 | 占位文件路径 | 建议内容 |
-|------|--------------|----------|
-| 训练损失 | `experiments/assets/training_curves/quick_start_loss.png` | W&B `train/loss`；若仅推理可标注 N/A |
-| 动作准确率 | `experiments/assets/training_curves/quick_start_action_accuracy.png` | 可选基座指标 |
+基座仿真视频见上；训练侧用 **D0 前 200 step** 的 W&B 曲线代表环境打通后、完整微调尚未跑完前的 loss / accuracy 走势（数据来自 W&B 项目 [`openvla-LoRA`](https://wandb.ai/zhihaozhang321-george-mason-university/openvla-LoRA)）。
 
 ![Quick Start — 训练损失](experiments/assets/training_curves/quick_start_loss.png)
 
 ![Quick Start — 动作准确率](experiments/assets/training_curves/quick_start_action_accuracy.png)
 
-> 从 W&B 导出 PNG 后覆盖上述路径即可显示。命名说明见 [`experiments/assets/training_curves/README.md`](experiments/assets/training_curves/README.md)。
+重新导出：`python scripts/exp/export_wandb_curves.py`
 
 ---
 
@@ -72,13 +69,23 @@
 | S3k | 0.0 | 开 | **3000** | 短训（步数不足） |
 | S10k | 0.1 | **关** | **10000** | 长训（最优） |
 
-### 总览对比（请插入 5 条曲线合一图）
+### 总览对比（W&B 导出，5 条 run 叠加）
+
+数据来源：[openvla-LoRA-ablation](https://wandb.ai/zhihaozhang321-george-mason-university/openvla-LoRA-ablation) + D0 @ [openvla-LoRA](https://wandb.ai/zhihaozhang321-george-mason-university/openvla-LoRA)。
 
 ![消融实验 — 训练损失对比](experiments/assets/training_curves/sweep_train_loss_compare.png)
 
 ![消融实验 — 动作准确率对比](experiments/assets/training_curves/sweep_action_accuracy_compare.png)
 
-### 各实验单独曲线（请插入 W&B 截图）
+| 配置 | 末 step | `train_loss` | `action_accuracy` | `l1_loss` |
+|------|---------|--------------|-------------------|-----------|
+| D0 | 6500 | 2.10 | 44.6% | 0.076 |
+| D1 | 6500 | 2.56 | 37.5% | 0.106 |
+| A-F | 6500 | 1.70 | 53.6% | 0.045 |
+| S3k | 3000 | 2.72 | 35.7% | 0.130 |
+| S10k | 10000 | **1.20** | **67.9%** | **0.026** |
+
+### 各实验单独曲线
 
 | D0 @ 6500 | D1 @ 6500 |
 |-----------|-----------|
@@ -92,11 +99,12 @@
 |----------------------|
 | ![S10k 训练曲线](experiments/assets/training_curves/S10k_curves.png) |
 
-**训练曲线观察（W&B，定性）：**
+**训练曲线观察（与上表一致）：**
 
-- **S10k** 在 10000 step 时训练指标最好（loss 最低、action token accuracy 最高）。
-- 相同 6500 step 下，**A-F**（无增强）比 **D1**（dropout 0.1 + 增强）更稳定。
-- **S3k** 明显欠拟合，与仿真 **0%** 成功率一致。
+- **S10k** 在 10000 step 时 loss / accuracy 全面最优，与仿真 **70%** 一致。
+- **A-F**（关 aug）优于 **D0/D1**（开 aug），说明训练分布与增强策略对收敛影响很大。
+- **D1** 的 dropout + aug 并未带来更好训练指标，仿真仅略好于 D0。
+- **S3k** 在 3000 step 停训时 loss 仍高、accuracy 低，与仿真 **0%** 一致。
 
 ---
 
