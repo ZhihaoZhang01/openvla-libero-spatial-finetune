@@ -4,6 +4,8 @@
 
 **仓库地址：** [github.com/ZhihaoZhang01/openvla-libero-spatial-finetune](https://github.com/ZhihaoZhang01/openvla-libero-spatial-finetune)
 
+> **关于演示动画：** GitHub 首页 README **不支持**内嵌相对路径的 `<video>` 标签，因此下文用 **GIF 预览** 展示关键片段；完整 **MP4** 见各段下方的「观看原片」链接，或目录 [`experiments/rollouts/2026_05_24/`](experiments/rollouts/2026_05_24/)（150 个文件）。
+
 ---
 
 ## 项目概览
@@ -35,11 +37,13 @@
 
 微调前，用 `run/quick_start.py` 在**未微调**的 OpenVLA-7B 上跑通整条链路（GPU、LIBERO 仿真、模型加载），确认环境可用。
 
-### 基座模型 Rollout 视频
+### 基座模型 Rollout
 
-<video controls width="640" src="experiments/demos/quick_start_spatial_pick_black_bowl.mp4"></video>
+![Quick Start 基座模型](experiments/assets/gifs/quick_start.gif)
 
-*任务：拿起黑碗并放到盘子上（spatial 套件）。基座模型有动作意图，但成功率很低。*
+[▶ 观看 MP4 原片](experiments/demos/quick_start_spatial_pick_black_bowl.mp4)
+
+*任务：拿起黑碗并放到盘子上。基座模型有动作意图，但成功率很低。*
 
 ### 训练曲线（冒烟阶段 — 请插入你的截图）
 
@@ -98,120 +102,112 @@
 
 ## 阶段三：微调后仿真评测 — 视频演示
 
-评测批次：`20260522-eval` · LIBERO-Spatial 前 3 任务 × 10 trials · 全部视频见 [`experiments/rollouts/2026_05_24/`](experiments/rollouts/2026_05_24/)（共 150 个 mp4）。
+评测批次：`20260522-eval` · LIBERO-Spatial 前 3 任务 × 10 trials
 
 ### 任务 0 — 拿起 plate 与 ramekin 之间的黑碗
 
 | S10k ✅ 成功 | D0 ❌ 失败 |
 |-------------|-----------|
-| <video controls width="300" src="experiments/rollouts/2026_05_24/2026_05_24-19_15_22--episode=1--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4"></video> | <video controls width="300" src="experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=1--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4"></video> |
+| ![S10k 任务0 成功](experiments/assets/gifs/s10k_task0_success.gif) | ![D0 任务0 失败](experiments/assets/gifs/d0_task0_fail.gif) |
+| [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-19_15_22--episode=1--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4) | [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=1--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4) |
 
 *S10k 该任务 80% · D0 该任务 20%*
 
 ### 任务 1 — 拿起 ramekin 旁边的黑碗
 
-| A-F ✅ 成功（ep.16，完整抓取轨迹） | A-F ❌ 失败：末端抖动、未夹稳 | D1 ✅ 成功 |
-|-----------------------------------|------------------------------|-----------|
-| <video controls width="280" src="experiments/rollouts/2026_05_24/2026_05_24-18_01_39--episode=16--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4"></video> | <video controls width="280" src="experiments/rollouts/2026_05_24/2026_05_24-18_01_39--episode=13--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4"></video> | <video controls width="280" src="experiments/rollouts/2026_05_24/2026_05_24-17_19_34--episode=14--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4"></video> |
+| A-F ✅ 成功（ep.16） | A-F ❌ 抖动/未夹稳（ep.13） | D1 ✅ 成功（ep.14） |
+|---------------------|---------------------------|---------------------|
+| ![A-F 任务1 成功](experiments/assets/gifs/af_task1_success.gif) | ![A-F 任务1 失败](experiments/assets/gifs/af_task1_fail_jitter.gif) | ![D1 任务1 成功](experiments/assets/gifs/d1_task1_success.gif) |
+| [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-18_01_39--episode=16--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4) | [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-18_01_39--episode=13--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4) | [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-17_19_34--episode=14--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4) |
 
-*A-F 该任务自动成功率 90%（9/10）· D1 60% · 本子集中相对最容易；但观感上仍有不少 trial 存在「臂不动 / 抖动」现象（见下文分析）。*
+*A-F 该任务自动成功率 90%（9/10）· D1 60% · 观感上仍常见「臂不动 / 抖动」（见下文）。*
 
 ### 任务 2 — 拿起桌面中央的黑碗（最难）
 
 | S10k ✅ 成功 | D0 ❌ 失败 |
 |-------------|-----------|
-| <video controls width="300" src="experiments/rollouts/2026_05_24/2026_05_24-19_15_22--episode=28--success=True--task=pick_up_the_black_bowl_from_table_center_and_place.mp4"></video> | <video controls width="300" src="experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=21--success=False--task=pick_up_the_black_bowl_from_table_center_and_place.mp4"></video> |
+| ![S10k 任务2 成功](experiments/assets/gifs/s10k_task2_success.gif) | ![D0 任务2 失败](experiments/assets/gifs/d0_task2_fail.gif) |
+| [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-19_15_22--episode=28--success=True--task=pick_up_the_black_bowl_from_table_center_and_place.mp4) | [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=21--success=False--task=pick_up_the_black_bowl_from_table_center_and_place.mp4) |
 
-*S10k 50% · D0/D1/A-F 约 10% · 弱配置的主要瓶颈。*
+*S10k 50% · D0/D1/A-F 约 10%*
 
-### S3k @ 3000 step — 完全失败
+### S3k @ 3000 step — 机械臂几乎不动
 
-<video controls width="480" src="experiments/rollouts/2026_05_24/2026_05_24-18_33_30--episode=1--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4"></video>
+![S3k 任务0 停滞](experiments/assets/gifs/s3k_stuck.gif)
 
-*30 个 episode 全部失败；3000 step 不足以学到可用的空间操作策略。*
+[▶ MP4 原片](experiments/rollouts/2026_05_24/2026_05_24-18_33_30--episode=5--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4)
+
+*30/30 episode 全部失败；3000 step 不足以学到可用策略。*
 
 ---
 
 ## 失败模式与原因分析
 
-对 `20260522-eval` 共 **150** 个 rollout（5 模型 × 30 episode）逐条回看视频后，**多数失败并非「完全不会动」**，而是以下几类可重复出现的模式。自动成功率（LIBERO 环境判定）与**人眼观感**之间也存在明显差距。
+对 `20260522-eval` 共 **150** 个 rollout 逐条回看后，**多数失败并非完全不会动**，而是以下可重复模式。自动成功率与**人眼观感**差距明显。
 
 ### 1. 机械臂几乎不动 / 动作幅度极小
 
-**现象：** 夹爪在画面中原地或近原地微动，数秒内不朝碗/盘运动，最终超时判失败。S3k、弱配置 D0 上最常见；部分 trial 虽被判 `success=True`，回放仍像「几乎没动」（我们已避免在 README 中选用这类「名义成功」片段）。
-
-**可能原因：**
+**现象：** 夹爪原地或近原地微动，不朝目标运动，超时判失败。S3k、弱配置 D0 最常见。
 
 | 因素 | 说明 |
 |------|------|
-| 训练不足 | S3k 仅 3000 step，策略未学到有效 action 分布，输出接近零向量 |
-| 动作反归一化 | OpenVLA 对 7-DoF 动作做 dataset 统计反归一化；弱 checkpoint 易输出「保守」小幅度 |
-| 开环执行 | 每步推理一次、按 chunk 执行，误差累积后策略倾向于「不动保平安」 |
+| 训练不足 | S3k 仅 3000 step，输出接近零向量 |
+| 动作反归一化 | 弱 checkpoint 倾向「保守」小幅度动作 |
+| 开环执行 | 误差累积后策略「不动保平安」 |
 
-<video controls width="480" src="experiments/rollouts/2026_05_24/2026_05_24-18_33_30--episode=5--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4"></video>
+（见上 **S3k** GIF 示例。）
 
-*示例：S3k，任务 0 — 全程几乎无有效位移（0/30 总体失败）。*
+### 2. 末端抖动 / 高频振荡
 
-### 2. 末端抖动 / 高频小幅振荡
-
-**现象：** 机械臂或夹爪在固定位置附近快速抖动，有「耗电振」感，但不形成向目标的平滑接近；常伴随抓空、碰倒碗或 plate。
-
-**可能原因：**
+**现象：** 臂或夹爪在固定位置快速抖动，不形成平滑接近；常伴随抓空、碰翻。
 
 | 因素 | 说明 |
 |------|------|
-| 离散动作 token | 模型预测离散化 action token，逐步反量化后相邻步差异大，仿真中表现为抖动 |
-| LoRA 容量与 dropout | D1（dropout=0.1 + aug）在部分任务上 loss 尚可但控制不平滑 |
-| 无 temporal ensemble | 评测脚本未对多步预测做滤波，单步噪声直接下发仿真 |
+| 离散动作 token | 逐步反量化后相邻步差异大 |
+| LoRA + dropout | D1 等配置 loss 尚可但控制不平滑 |
+| 无动作滤波 | 单步噪声直接下发仿真 |
 
-| D0 ❌ 抖动（任务 1） | D0 ❌ 接近目标但抓空 |
-|---------------------|---------------------|
-| <video controls width="300" src="experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=12--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4"></video> | <video controls width="300" src="experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=13--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4"></video> |
+| D0 ❌ 抖动 | D0 ❌ 接近但抓空 |
+|-----------|-----------------|
+| ![D0 抖动](experiments/assets/gifs/d0_jitter.gif) | ![D0 抓空](experiments/assets/gifs/d0_miss_grasp.gif) |
+| [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=12--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4) | [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=13--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4) |
 
-### 3. 有运动但操作失败（抓空、碰翻、未入盘）
+### 3. 有运动但操作失败
 
-**现象：** 臂有明显位移，但未夹住碗、打翻物体或放置偏移。任务 2（桌面中央）最多。
+臂有明显位移但未夹住或放置偏移；**任务 2** 最多。S10k 仅 50%，其余约 10%。
 
-**可能原因：** 精细对准要求高；弱模型在 depth / 空间关系上误差大；任务 2 成功率 S10k 仅 50%，其余约 10%。
-
-### 4. 训练配置与评测设置的影响
+### 4. 配置与评测的影响
 
 | 观察 | 解释 |
 |------|------|
-| A-F、S10k 明显好于 D0/D1 | 关闭 `image_aug` 且评测 `center_crop=False` 与训练分布更一致 |
-| 任务 1 自动成功率高 | 碗距 ramekin 近、遮挡少；但视频中仍可见抖动类失败（见上 ep.13） |
-| 任务 2 普遍差 | 中央抓取 + 放置精度要求高，暴露控制稳定性问题 |
-| W&B loss 好 ≠ 仿真好 | 训练指标与 LIBERO 成功判据不对齐；需以 rollout 为准 |
+| A-F、S10k 明显好于 D0/D1 | 关 aug + `center_crop=False` 与训练一致 |
+| 任务 1 自动成功率高 | 场景简单，但视频仍有抖动 |
+| W&B loss 好 ≠ 仿真好 | 以 rollout 为准 |
 
-### 5. 小结与后续改进方向
+### 5. 小结
 
-- **当前瓶颈：** 控制稳定性（抖动、停滞）> 纯感知；长训 + 关 aug 的 **S10k** 明显缓解，但未根除。
-- **建议尝试：** 动作平滑 / 滑动平均；增大 `num_open_loop_steps` 对比；全套 10 任务 × 更多 trial；可选 temporal ensembling；发布 checkpoint 供他人复现人类观感评测。
+- **瓶颈：** 控制稳定性（抖动、停滞）> 纯感知；**S10k** 明显缓解但未根除。
+- **改进方向：** 动作平滑、更多 trial、全套 10 任务评测、发布 checkpoint。
 
-> 完整数字与分任务表见 [`experiments/REPORT_libero_spatial_sweep_20260522.md`](experiments/REPORT_libero_spatial_sweep_20260522.md)。
+> 完整数据：[`experiments/REPORT_libero_spatial_sweep_20260522.md`](experiments/REPORT_libero_spatial_sweep_20260522.md)
 
 ---
 
 ## 仓库结构
 
 ```
-├── patches/openvla/          # finetune.py、run_libero_eval.py 补丁（含 upstream.diff）
-├── scripts/
-│   ├── env/                  # activate_openvla.sh
-│   ├── train/                # LoRA 训练
-│   ├── eval/                 # 单 checkpoint 评测
-│   └── exp/                  # 5 组 sweep（experiments.conf、run_libero_sweep.sh）
+├── patches/openvla/          # finetune.py、run_libero_eval.py 补丁
+├── scripts/                  # 训练 / 评测 / sweep
 ├── experiments/
-│   ├── rollouts/             # 150 个评测 mp4（2026_05_24）
-│   ├── demos/                # quick_start 基座模型视频
-│   ├── eval_logs/            # 各模型 EVAL 文本日志
-│   ├── runs/                 # sweep 元数据（不含权重）
-│   ├── assets/training_curves/  # ← 在此放入 W&B 截图
+│   ├── assets/gifs/          # README 用 GIF 预览（由 MP4 生成）
+│   ├── rollouts/2026_05_24/  # 150 个评测 MP4
+│   ├── demos/                # quick_start MP4
+│   ├── assets/training_curves/  # W&B 截图占位
 │   └── results.csv
-└── run/                      # verify_phase01.py、quick_start.py 等
+└── run/
 ```
 
-**不在本仓库中：** `openvla/`、`LIBERO/`、`dlimp/`、数据集、基座权重、LoRA checkpoint（每个约 465MB）。
+**不在本仓库：** `openvla/`、`LIBERO/`、`dlimp/`、数据集、LoRA 权重（~465MB/个）。
 
 ---
 
@@ -231,17 +227,13 @@ cp "${PATCH_ROOT}/run_libero_eval.py" "${OPENVLA_ROOT}/experiments/robot/libero/
 
 ### 2. 环境依赖
 
-安装 OpenVLA、LIBERO、`dlimp`，并下载 **OpenVLA-7B** 与 **libero_spatial_no_noops** RLDS 数据（见 `scripts/setup/`、`scripts/download/`）。
+安装 OpenVLA、LIBERO、`dlimp`，下载 **OpenVLA-7B** 与 **libero_spatial_no_noops**（见 `scripts/setup/`、`scripts/download/`）。
 
 ### 3. 训练与评测
 
 ```bash
 source scripts/env/activate_openvla.sh
-
-# 单组基线训练
 bash scripts/train/train_libero.sh
-
-# 完整 5 组消融
 TRAIN_ONLY=1 SWEEP_RUN_ID=my-train bash scripts/exp/run_libero_sweep.sh
 EVAL_ONLY=1  SWEEP_RUN_ID=my-eval  bash scripts/exp/run_libero_sweep.sh
 ```
@@ -252,8 +244,8 @@ EVAL_ONLY=1  SWEEP_RUN_ID=my-eval  bash scripts/exp/run_libero_sweep.sh
 
 | 文件 | 修改内容 |
 |------|----------|
-| `vla-scripts/finetune.py` | 权重保存到 run 目录；训练结束不 merge LoRA（避免 80GB OOM） |
-| `experiments/robot/libero/run_libero_eval.py` | 修复 LIBERO 路径；新增 `--num_tasks` 支持子集评测 |
+| `vla-scripts/finetune.py` | 权重保存到 run 目录；不 merge LoRA（防 OOM） |
+| `experiments/robot/libero/run_libero_eval.py` | LIBERO 路径修复；`--num_tasks` 子集评测 |
 
 详见 [`patches/openvla/README.md`](patches/openvla/README.md)。
 
@@ -261,12 +253,12 @@ EVAL_ONLY=1  SWEEP_RUN_ID=my-eval  bash scripts/exp/run_libero_sweep.sh
 
 ## 致谢
 
-- [openvla/openvla](https://github.com/openvla/openvla) — 基座 VLA 模型
-- [Lifelong-Robot-Learning/LIBERO](https://github.com/Lifelong-Robot-Learning/LIBERO) — 基准与仿真环境
-- [Escapist-coder/OpenVLA-Libero-Reproduction-Finetune](https://github.com/Escapist-coder/OpenVLA-Libero-Reproduction-Finetune) — 复现参考与 README 结构借鉴
+- [openvla/openvla](https://github.com/openvla/openvla)
+- [Lifelong-Robot-Learning/LIBERO](https://github.com/Lifelong-Robot-Learning/LIBERO)
+- [Escapist-coder/OpenVLA-Libero-Reproduction-Finetune](https://github.com/Escapist-coder/OpenVLA-Libero-Reproduction-Finetune)
 
 ---
 
 ## 引用
 
-若使用 OpenVLA 或 LIBERO，请引用其原始论文。本仓库为个人学习与消融实验记录，与官方实现无隶属关系。
+若使用 OpenVLA 或 LIBERO，请引用其原始论文。本仓库为个人学习记录，与官方无隶属关系。
