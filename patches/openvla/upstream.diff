@@ -1,0 +1,119 @@
+diff --git a/experiments/robot/libero/run_libero_eval.py b/experiments/robot/libero/run_libero_eval.py
+index 5c3f581..db9ab48 100644
+--- a/experiments/robot/libero/run_libero_eval.py
++++ b/experiments/robot/libero/run_libero_eval.py
+@@ -23,14 +23,26 @@ from dataclasses import dataclass
+ from pathlib import Path
+ from typing import Optional, Union
+ 
++# --- Path fix: avoid importing experiments/robot/libero as package "libero" ---
++_AUTODL_ROOT = os.environ.get("AUTODL_ROOT", "/root/autodl-tmp")
++sys.path.insert(0, os.path.join(_AUTODL_ROOT, "LIBERO"))
++sys.path.insert(0, os.path.join(_AUTODL_ROOT, "openvla"))
++_current_dir = os.path.dirname(os.path.abspath(__file__))
++if _current_dir in sys.path:
++    sys.path.remove(_current_dir)
++# --- end path fix ---
++
+ import draccus
+ import numpy as np
+ import tqdm
+-from libero.libero import benchmark
++
++try:
++    from libero.libero import benchmark
++except ImportError:
++    from libero import benchmark
+ 
+ import wandb
+ 
+-# Append current directory so that interpreter can find experiments.robot
+ sys.path.append("../..")
+ from experiments.robot.libero.libero_utils import (
+     get_libero_dummy_action,
+@@ -71,6 +83,7 @@ class GenerateConfig:
+     task_suite_name: str = "libero_spatial"          # Task suite. Options: libero_spatial, libero_object, libero_goal, libero_10, libero_90
+     num_steps_wait: int = 10                         # Number of steps to wait for objects to stabilize in sim
+     num_trials_per_task: int = 50                    # Number of rollouts per task
++    num_tasks: Optional[int] = None                  # If set, only evaluate task_id 0 .. num_tasks-1 (default: all tasks in suite)
+ 
+     #################################################################################################################
+     # Utils
+@@ -137,15 +150,16 @@ def eval_libero(cfg: GenerateConfig) -> None:
+     benchmark_dict = benchmark.get_benchmark_dict()
+     task_suite = benchmark_dict[cfg.task_suite_name]()
+     num_tasks_in_suite = task_suite.n_tasks
+-    print(f"Task suite: {cfg.task_suite_name}")
+-    log_file.write(f"Task suite: {cfg.task_suite_name}\n")
++    num_tasks_to_run = num_tasks_in_suite if cfg.num_tasks is None else min(cfg.num_tasks, num_tasks_in_suite)
++    print(f"Task suite: {cfg.task_suite_name} ({num_tasks_to_run}/{num_tasks_in_suite} tasks)")
++    log_file.write(f"Task suite: {cfg.task_suite_name} ({num_tasks_to_run}/{num_tasks_in_suite} tasks)\n")
+ 
+     # Get expected image dimensions
+     resize_size = get_image_resize_size(cfg)
+ 
+     # Start evaluation
+     total_episodes, total_successes = 0, 0
+-    for task_id in tqdm.tqdm(range(num_tasks_in_suite)):
++    for task_id in tqdm.tqdm(range(num_tasks_to_run)):
+         # Get task
+         task = task_suite.get_task(task_id)
+ 
+diff --git a/vla-scripts/finetune.py b/vla-scripts/finetune.py
+index ec51a6b..a4f9b43 100644
+--- a/vla-scripts/finetune.py
++++ b/vla-scripts/finetune.py
+@@ -322,8 +322,8 @@ def finetune(cfg: FinetuneConfig) -> None:
+                 if distributed_state.is_main_process:
+                     print(f"Saving Model Checkpoint for Step {gradient_step_idx}")
+ 
+-                    # If LoRA, we first save adapter weights, then merge into full model; otherwise, default save!
+-                    save_dir = adapter_dir if cfg.use_lora else run_dir
++                    # Blog patch: save LoRA adapter only (no merge) to avoid OOM on save
++                    save_dir = run_dir
+ 
+                     # Save Processor & Weights
+                     processor.save_pretrained(run_dir)
+@@ -332,35 +332,13 @@ def finetune(cfg: FinetuneConfig) -> None:
+                 # Wait for processor and adapter weights to be saved by main process
+                 dist.barrier()
+ 
+-                # Merge LoRA weights into model backbone for faster inference
+-                #   =>> Note that merging is slow and can be done post-hoc to speed up training
+-                if cfg.use_lora:
+-                    base_vla = AutoModelForVision2Seq.from_pretrained(
+-                        cfg.vla_path, torch_dtype=torch.bfloat16, low_cpu_mem_usage=True, trust_remote_code=True
+-                    )
+-                    merged_vla = PeftModel.from_pretrained(base_vla, adapter_dir)
+-                    merged_vla = merged_vla.merge_and_unload()
+-                    if distributed_state.is_main_process:
+-                        if cfg.save_latest_checkpoint_only:
+-                            # Overwrite latest checkpoint
+-                            merged_vla.save_pretrained(run_dir)
+-
+-                            print(f"Saved Model Checkpoint for Step {gradient_step_idx} at: {run_dir}")
+-                        else:
+-                            # Prepare to save checkpoint in new directory
+-                            checkpoint_dir = Path(str(run_dir) + f"--{gradient_step_idx}_chkpt")
+-                            os.makedirs(checkpoint_dir, exist_ok=True)
+-
+-                            # Save dataset statistics to new directory
+-                            save_dataset_statistics(vla_dataset.dataset_statistics, checkpoint_dir)
+-
+-                            # Save processor and model weights to new directory
+-                            processor.save_pretrained(checkpoint_dir)
+-                            merged_vla.save_pretrained(checkpoint_dir)
+-
+-                            print(f"Saved Model Checkpoint for Step {gradient_step_idx} at: {checkpoint_dir}")
+-
+-                # Block on Main Process Checkpointing
++                # Merge LoRA disabled — merge at eval time via PeftModel.merge_and_unload()
++                # if cfg.use_lora:
++                #     base_vla = AutoModelForVision2Seq.from_pretrained(...)
++                #     merged_vla = PeftModel.from_pretrained(base_vla, adapter_dir)
++                #     merged_vla = merged_vla.merge_and_unload()
++                #     ...
++
+                 dist.barrier()
+ 
+             # Stop training when max_steps is reached

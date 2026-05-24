@@ -1,0 +1,10 @@
+{
+  "sweep_run_id": "20260522-train",
+  "exp_id": "D0",
+  "description": "baseline dropout0 aug on @6500",
+  "canonical_ckpt": "/root/autodl-tmp/checkpoints/openvla-7b+libero_spatial_no_noops+b16+lr-0.0005+lora-r32+dropout-0.0--image_aug",
+  "train_skipped": 1,
+  "success_rate": "",
+  "num_trials": 50,
+  "archived_at": "2026-05-22T23:06:54+08:00"
+}

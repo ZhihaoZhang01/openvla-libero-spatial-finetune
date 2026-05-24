@@ -1,0 +1,42 @@
+# ========== AutoDL 平台文件 ==========
+.autodl/
+[*]
+
+# ========== 不上传：第三方完整仓库（仅根目录）==========
+/openvla/
+/LIBERO/
+/dlimp/
+
+# ========== 不上传：大文件 / 本地缓存 ==========
+hf_cache/
+datasets/
+checkpoints/
+logs/
+outputs/
+run/__pycache__/
+
+# ========== 实验快照中的重复权重（canonical 在 checkpoints/）==========
+experiments/runs/**/checkpoint/
+
+# ========== 敏感信息 ==========
+.env
+.hf_token
+.wandb_api_key
+**/*api_key*
+**/*_token
+
+# ========== Python / IDE ==========
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.idea/
+.vscode/
+.DS_Store
+
+# ========== 本地文档 / README（GitHub 上自行维护）==========
+docs/
+/README.md
+
+# ========== 备份 ==========
+experiments/results.csv.bak
