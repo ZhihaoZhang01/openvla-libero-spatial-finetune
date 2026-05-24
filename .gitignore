@@ -34,9 +34,9 @@ __pycache__/
 .vscode/
 .DS_Store
 
-# ========== 本地文档 / README（GitHub 上自行维护）==========
+# ========== 本地文档（不上传 GitHub）==========
 docs/
-/README.md
+README-local-autodl.md
 
 # ========== 备份 ==========
 experiments/results.csv.bak
