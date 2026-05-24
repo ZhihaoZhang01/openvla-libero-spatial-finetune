@@ -128,7 +128,7 @@
 | ![A-F 任务1 成功](experiments/assets/gifs/af_task1_success.gif) | ![A-F 任务1 失败](experiments/assets/gifs/af_task1_fail_jitter.gif) | ![D1 任务1 成功](experiments/assets/gifs/d1_task1_success.gif) |
 | [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-18_01_39--episode=16--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4) | [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-18_01_39--episode=13--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4) | [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-17_19_34--episode=14--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4) |
 
-*A-F 该任务自动成功率 90%（9/10）· D1 60% · 观感上仍常见「臂不动 / 抖动」（见下文）。*
+*A-F 该任务自动成功率 90%（9/10）· D1 60% · 失败 case 多为抖动或「夹起但放不准」（见下文）。*
 
 ### 任务 2 — 拿起桌面中央的黑碗（最难）
 
@@ -139,63 +139,74 @@
 
 *S10k 50% · D0/D1/A-F 约 10%*
 
-### S3k @ 3000 step — 机械臂几乎不动
+### S3k @ 3000 step — 未学到有效夹取与移动
 
-![S3k 任务0 停滞](experiments/assets/gifs/s3k_stuck.gif)
+![S3k 任务0 无效策略](experiments/assets/gifs/s3k_stuck.gif)
 
 [▶ MP4 原片](experiments/rollouts/2026_05_24/2026_05_24-18_33_30--episode=5--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4)
 
-*30/30 episode 全部失败；3000 step 不足以学到可用策略。*
+*30/30 episode 全部失败。回放可见臂在动，但**夹取手势、接近轨迹与放置阶段**均未形成稳定模式，属于「有动作、无有效技能」，而非单纯停滞。*
 
 ---
 
 ## 失败模式与原因分析
 
-对 `20260522-eval` 共 **150** 个 rollout 逐条回看后，**多数失败并非完全不会动**，而是以下可重复模式。自动成功率与**人眼观感**差距明显。
+对 `20260522-eval` 共 **150** 个 rollout 逐条回看后，失败可归纳为以下几类（**常叠加出现**）。自动成功率与**人眼观感**差距明显。
 
-### 1. 机械臂几乎不动 / 动作幅度极小
+### 1. 训练不足 → 未学到有效夹取与移动（S3k 典型）
 
-**现象：** 夹爪原地或近原地微动，不朝目标运动，超时判失败。S3k、弱配置 D0 最常见。
+**现象：** 机械臂**有位移**，但接近、夹爪闭合、搬运与放置各阶段**不成形**——夹空、蹭边、乱摆或半途放弃，而非「完全不动」。S3k（3000 step）最明显；弱配置 D0 在难任务上也有类似表现。
 
 | 因素 | 说明 |
 |------|------|
-| 训练不足 | S3k 仅 3000 step，输出接近零向量 |
-| 动作反归一化 | 弱 checkpoint 倾向「保守」小幅度动作 |
-| 开环执行 | 误差累积后策略「不动保平安」 |
+| 训练步数过少 | S3k 仅 3000 step，W&B accuracy ~36%，策略未收敛 |
+| 动作分布未对齐 | 反归一化后的 7-DoF 动作缺乏「抓—提—移—放」连贯性 |
+| 开环 chunk 执行 | 单步预测误差累积，难以完成多阶段操作 |
 
-（见上 **S3k** GIF 示例。）
+（见上 **S3k** GIF：有动但无效。）
 
-### 2. 末端抖动 / 高频振荡
+### 2. 末端抖动 / 高频振荡（D0 等弱配置常见）
 
-**现象：** 臂或夹爪在固定位置快速抖动，不形成平滑接近；常伴随抓空、碰翻。
+**现象：** 夹爪或腕部在目标附近**快速抖动**，轨迹不光滑；常导致抓空、碰倒碗或 plate。
 
 | 因素 | 说明 |
 |------|------|
 | 离散动作 token | 逐步反量化后相邻步差异大 |
-| LoRA + dropout | D1 等配置 loss 尚可但控制不平滑 |
+| 图像增强 + crop 不一致 | D0/D1 训练 aug 与评测设置加重分布偏移 |
 | 无动作滤波 | 单步噪声直接下发仿真 |
 
-| D0 ❌ 抖动 | D0 ❌ 接近但抓空 |
-|-----------|-----------------|
+| D0 ❌ 抖动（任务 0，ep.1） | D0 ❌ 接近但抓空（任务 0，ep.3） |
+|---------------------------|--------------------------------|
 | ![D0 抖动](experiments/assets/gifs/d0_jitter.gif) | ![D0 抓空](experiments/assets/gifs/d0_miss_grasp.gif) |
-| [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=12--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4) | [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=13--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4) |
+| [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=1--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4) | [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-16_40_01--episode=3--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4) |
 
-### 3. 有运动但操作失败
+### 3. 夹取成功、放置失败（多模型常见）
 
-臂有明显位移但未夹住或放置偏移；**任务 2** 最多。S10k 仅 50%，其余约 10%。
+**现象：** 回放中**能夹起黑碗甚至离开桌面**，但在移向 plate 时偏移、滑落、碰翻或停在盘外，LIBERO 仍判 `success=False`。在 D0/D1/A-F 的失败 episode 里占比较高，是拉低总成功率的主因之一；S10k 相对少见但仍存在。
 
-### 4. 配置与评测的影响
+| 因素 | 说明 |
+|------|------|
+| 两阶段难度不均 | 「抓」比「精准放到盘心」易学；后者对末端位姿更敏感 |
+| 弱模型空间精度不足 | 尤其任务 2（桌面中央）放置失败集中 |
+| 仿真成功判据严格 | 碗需稳定落在 plate 上，轻微偏移即失败 |
+
+### 4. 难任务上的综合失败
+
+**任务 2**（桌面中央）放置要求最高：S10k 约 50%，D0/D1/A-F 约 10%。多为「夹取尚可 + 放置失败」或全程无效轨迹叠加。
+
+### 5. 配置与评测的影响
 
 | 观察 | 解释 |
 |------|------|
 | A-F、S10k 明显好于 D0/D1 | 关 aug + `center_crop=False` 与训练一致 |
-| 任务 1 自动成功率高 | 场景简单，但视频仍有抖动 |
-| W&B loss 好 ≠ 仿真好 | 以 rollout 为准 |
+| 任务 1 自动成功率高 | 场景简单；失败多为抖动或放置偏移 |
+| W&B loss 好 ≠ 仿真好 | 以 rollout 为准；需区分「夹取失败」与「放置失败」 |
 
-### 5. 小结
+### 6. 小结
 
-- **瓶颈：** 控制稳定性（抖动、停滞）> 纯感知；**S10k** 明显缓解但未根除。
-- **改进方向：** 动作平滑、更多 trial、全套 10 任务评测、发布 checkpoint。
+- **主要瓶颈：** ① 无效/不完整操作技能（S3k）② 末端抖动（D0/D1）③ **夹取成功、放置失败**（各模型普遍）。
+- **S10k** 在三类问题上均最好，但任务 2 仍有约一半失败。
+- **改进方向：** 动作平滑、placement 阶段数据增强或更长训练、分阶段评测（grasp / place）、全套 10 任务 × 更多 trial。
 
 > 完整数据：[`experiments/REPORT_libero_spatial_sweep_20260522.md`](experiments/REPORT_libero_spatial_sweep_20260522.md)
 
