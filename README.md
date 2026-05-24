@@ -45,16 +45,6 @@
 
 *任务：拿起黑碗并放到盘子上。基座模型有动作意图，但成功率很低。*
 
-### 训练曲线（冒烟阶段）
-
-基座仿真视频见上；训练侧用 **D0 前 200 step** 的 W&B 曲线代表环境打通后、完整微调尚未跑完前的 loss / accuracy 走势（数据来自 W&B 项目 [`openvla-LoRA`](https://wandb.ai/zhihaozhang321-george-mason-university/openvla-LoRA)）。
-
-![Quick Start — 训练损失](experiments/assets/training_curves/quick_start_loss.png)
-
-![Quick Start — 动作准确率](experiments/assets/training_curves/quick_start_action_accuracy.png)
-
-重新导出：`python scripts/exp/export_wandb_curves.py`
-
 ---
 
 ## 阶段二：消融训练 — 训练曲线
@@ -70,8 +60,6 @@
 | S10k | 0.1 | **关** | **10000** | 长训（最优） |
 
 ### 总览对比（W&B 导出，5 条 run 叠加）
-
-数据来源：[openvla-LoRA-ablation](https://wandb.ai/zhihaozhang321-george-mason-university/openvla-LoRA-ablation) + D0 @ [openvla-LoRA](https://wandb.ai/zhihaozhang321-george-mason-university/openvla-LoRA)。
 
 ![消融实验 — 训练损失对比](experiments/assets/training_curves/sweep_train_loss_compare.png)
 
@@ -128,7 +116,7 @@
 | ![A-F 任务1 成功](experiments/assets/gifs/af_task1_success.gif) | ![A-F 任务1 失败](experiments/assets/gifs/af_task1_fail_jitter.gif) | ![D1 任务1 成功](experiments/assets/gifs/d1_task1_success.gif) |
 | [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-18_01_39--episode=16--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4) | [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-18_01_39--episode=13--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4) | [▶ MP4](experiments/rollouts/2026_05_24/2026_05_24-17_19_34--episode=14--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4) |
 
-*A-F 该任务自动成功率 90%（9/10）· D1 60% · 失败 case 多为抖动或「夹起但放不准」（见下文）。*
+*A-F 该任务自动成功率 90%（9/10）· D1 60% · 失败 case 多为抖动或夹起成功但放不准。*
 
 ### 任务 2 — 拿起桌面中央的黑碗（最难）
 
@@ -145,7 +133,7 @@
 
 [▶ MP4 原片](experiments/rollouts/2026_05_24/2026_05_24-18_33_30--episode=5--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4)
 
-*30/30 episode 全部失败。回放可见臂在动，但**夹取手势、接近轨迹与放置阶段**均未形成稳定模式，属于「有动作、无有效技能」，而非单纯停滞。*
+*30/30 episode 全部失败。回放可见机械臂在移动，但**夹取手势、接近轨迹与放置阶段**没有形成稳定的模式。*
 
 ---
 
@@ -155,7 +143,7 @@
 
 ### 1. 训练不足 → 未学到有效夹取与移动（S3k 典型）
 
-**现象：** 机械臂**有位移**，但接近、夹爪闭合、搬运与放置各阶段**不成形**——夹空、蹭边、乱摆或半途放弃，而非「完全不动」。S3k（3000 step）最明显；弱配置 D0 在难任务上也有类似表现。
+**现象：** 机械臂**有位移**，但接近、夹爪闭合、搬运与放置各阶段**不成形**——夹空、蹭到物体边缘、乱摆或半途放弃。S3k（3000 step）最明显；弱配置 D0 在难任务上也有类似表现。
 
 | 因素 | 说明 |
 |------|------|
@@ -167,7 +155,7 @@
 
 ### 2. 末端抖动 / 高频振荡（D0 等弱配置常见）
 
-**现象：** 夹爪或腕部在目标附近**快速抖动**，轨迹不光滑；常导致抓空、碰倒碗或 plate。
+**现象：** 夹爪或腕部在目标附近**快速抖动**，轨迹不光滑；常导致抓空、碰倒碗其他物体。
 
 | 因素 | 说明 |
 |------|------|
