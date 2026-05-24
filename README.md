@@ -43,7 +43,7 @@
 
 [▶ 观看 MP4 原片](experiments/demos/quick_start_spatial_pick_black_bowl.mp4)
 
-*任务：拿起黑碗并放到盘子上。基座模型有动作意图，但成功率很低。*
+*任务：拿起黑碗并放到盘子上。基座模型机械臂几乎不动。*
 
 ---
 
