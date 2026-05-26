@@ -158,7 +158,7 @@
 
 ### Rollout 演示（任务 0，10/10 成功）
 
-![π₀.₅ 任务0 成功](experiments/assets/gifs/pi05_task0_success.gif)
+![π₀.₅ 任务0 成功](experiments/assets/gifs/pi05_task0_success_full.gif)
 
 [▶ 观看 MP4 原片](experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=1--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the.mp4)
 
