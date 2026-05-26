@@ -4,7 +4,6 @@
 
 **仓库地址：** [github.com/ZhihaoZhang01/openvla-libero-spatial-finetune](https://github.com/ZhihaoZhang01/openvla-libero-spatial-finetune)
 
-> **关于演示动画：** GitHub 首页 README **不支持**内嵌相对路径的 `<video>` 标签，因此下文用 **GIF 预览** 展示关键片段；完整 **MP4** 见各段下方的「观看原片」链接，或目录 [`experiments/rollouts/2026_05_24/`](experiments/rollouts/2026_05_24/)（150 个文件）。
 
 ---
 
@@ -17,7 +16,7 @@
 | 微调方式 | LoRA（`rank=32`，`lr=5e-4`，`batch=16`） |
 | 训练硬件 | NVIDIA A800 80GB（AutoDL） |
 | OpenVLA 最优 | **S10k** — 10000 step，`dropout=0.1`，关闭图像增强 |
-| 横向基线 | **π₀.₅-LIBERO**（OpenPI 官方 checkpoint，`pi05_libero`） |
+| 横向比对| **π₀.₅-LIBERO**（OpenPI 官方 checkpoint，`pi05_libero`） |
 | 评测协议 | 前 **3 个任务** × 每任务 **10 次 trial** = 每模型 **30** 个 episode |
 
 ### 仿真成功率（同协议：3 任务 × 10 trials）
@@ -31,10 +30,10 @@
 | 5 | D0 | OpenVLA LoRA | 6500 | 0.0 | 开 | 16.7%（5/30） |
 | 6 | S3k | OpenVLA LoRA | 3000 | 0.0 | 开 | 0.0%（0/30） |
 
-- OpenVLA 批次：`20260522-eval` · π₀.₅ 批次：`20260526-200803-pi05`
-- 分任务明细见 [`experiments/REPORT_libero_spatial_sweep_20260522.md`](experiments/REPORT_libero_spatial_sweep_20260522.md) 与 [`experiments/results.csv`](experiments/results.csv)
+- OpenVLA 实验：`20260522-eval` · π₀.₅ 实验：`20260526-200803-pi05`
+- 任务明细见 [`experiments/REPORT_libero_spatial_sweep_20260522.md`](experiments/REPORT_libero_spatial_sweep_20260522.md) 与 [`experiments/results.csv`](experiments/results.csv)
 
-### OpenVLA LoRA vs π₀.₅-LIBERO（简要对比）
+### OpenVLA LoRA vs π₀.₅-LIBERO
 
 | 维度 | OpenVLA（本仓库 S10k） | π₀.₅-LIBERO（OpenPI 官方） |
 |------|------------------------|----------------------------|
@@ -44,11 +43,11 @@
 | 本协议 3×10 成功率 | **70%** | **100%** |
 | 训练成本 | 单卡 A800，~数小时 LoRA | 官方预训练权重，本地仅推理评测 |
 
-**解读：** 在**相同 3 个 spatial 任务、相同 trial 数**下，π₀.₅ 显著高于本组 OpenVLA LoRA 最优（S10k）。差距来自模型容量、官方 LIBERO 专用训练、双相机与 chunk 策略等，**不宜**与 OpenPI 论文中 **全套 10 任务 × 50 trials** 的 numbers 直接对比。本仓库价值在于：**固定子集协议**下，LoRA 消融结论（aug / dropout / 步数）与强基线的相对位置。
+**解读：** 在**相同 3 个 spatial 任务、相同 trial 数**下，π₀.₅ 显著高于本组 OpenVLA LoRA 最优（S10k）。差距应该来自模型容量、官方 LIBERO 专用训练、双相机与 pi0.5 flow matching 策略等因素，
 
 ---
 
-## 阶段一：Quick Start 冒烟（基座模型）
+## 阶段一：Quick Start
 
 微调前，用 `run/quick_start.py` 在**未微调**的 OpenVLA-7B 上跑通整条链路（GPU、LIBERO 仿真、模型加载），确认环境可用。
 
@@ -62,7 +61,7 @@
 
 ---
 
-## 阶段二：消融训练 — 训练曲线
+## 阶段二：对比训练 — 训练曲线
 
 五组 LoRA 实验（训练批次 `20260522-train`）。固定超参：`lora_rank=32`，`lr=5e-4`，`batch=16`，数据集 `libero_spatial_no_noops`。
 
