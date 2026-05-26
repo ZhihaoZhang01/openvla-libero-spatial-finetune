@@ -1,0 +1,308 @@
+[robosuite WARNING] No private macro file found! (macros.py:53)
+[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
+[robosuite WARNING] To setup, run: python /root/autodl-tmp/openpi/examples/libero/.venv/lib/python3.8/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
+INFO:root:Task suite: libero_spatial (3/10 tasks)
+INFO:root:Waiting for server at ws://127.0.0.1:8000...
+[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  0%|          | 0/3 [00:00<?, ?it/s]/root/autodl-tmp/openpi/examples/libero/.venv/lib/python3.8/site-packages/numba/np/arraymath.py:3845: DeprecationWarning: `np.MachAr` is deprecated (NumPy 1.22).
+  @overload(np.MachAr)
+[Warning]: datasets path /root/autodl-tmp/LIBERO/libero/libero/../datasets does not exist!
+[Warning]: datasets path /root/autodl-tmp/LIBERO/libero/libero/../datasets does not exist!
+
+  0%|          | 0/10 [00:00<?, ?it/s][AINFO:root:
+Task: pick up the black bowl between the plate and the ramekin and place it on the plate
+INFO:root:Starting episode 1...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=1--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 1
+INFO:root:# successes: 1 (100.0%)
+
+ 10%|█         | 1/10 [00:35<05:19, 35.45s/it][AINFO:root:
+Task: pick up the black bowl between the plate and the ramekin and place it on the plate
+INFO:root:Starting episode 2...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=2--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 2
+INFO:root:# successes: 2 (100.0%)
+
+ 20%|██        | 2/10 [00:40<02:19, 17.41s/it][AINFO:root:
+Task: pick up the black bowl between the plate and the ramekin and place it on the plate
+INFO:root:Starting episode 3...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=3--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 3
+INFO:root:# successes: 3 (100.0%)
+
+ 30%|███       | 3/10 [00:45<01:22, 11.73s/it][AINFO:root:
+Task: pick up the black bowl between the plate and the ramekin and place it on the plate
+INFO:root:Starting episode 4...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=4--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 4
+INFO:root:# successes: 4 (100.0%)
+
+ 40%|████      | 4/10 [00:50<00:54,  9.01s/it][AINFO:root:
+Task: pick up the black bowl between the plate and the ramekin and place it on the plate
+INFO:root:Starting episode 5...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=5--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 5
+INFO:root:# successes: 5 (100.0%)
+
+ 50%|█████     | 5/10 [00:54<00:37,  7.43s/it][AINFO:root:
+Task: pick up the black bowl between the plate and the ramekin and place it on the plate
+INFO:root:Starting episode 6...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=6--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 6
+INFO:root:# successes: 6 (100.0%)
+
+ 60%|██████    | 6/10 [00:59<00:26,  6.53s/it][AINFO:root:
+Task: pick up the black bowl between the plate and the ramekin and place it on the plate
+INFO:root:Starting episode 7...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=7--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 7
+INFO:root:# successes: 7 (100.0%)
+
+ 70%|███████   | 7/10 [01:04<00:17,  5.90s/it][AINFO:root:
+Task: pick up the black bowl between the plate and the ramekin and place it on the plate
+INFO:root:Starting episode 8...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=8--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 8
+INFO:root:# successes: 8 (100.0%)
+
+ 80%|████████  | 8/10 [01:08<00:11,  5.55s/it][AINFO:root:
+Task: pick up the black bowl between the plate and the ramekin and place it on the plate
+INFO:root:Starting episode 9...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=9--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 9
+INFO:root:# successes: 9 (100.0%)
+
+ 90%|█████████ | 9/10 [01:13<00:05,  5.35s/it][AINFO:root:
+Task: pick up the black bowl between the plate and the ramekin and place it on the plate
+INFO:root:Starting episode 10...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=10--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 10
+INFO:root:# successes: 10 (100.0%)
+
+100%|██████████| 10/10 [01:18<00:00,  5.14s/it][A100%|██████████| 10/10 [01:18<00:00,  7.84s/it]
+INFO:root:Current task success rate: 1.0
+INFO:root:Current total success rate: 1.0
+ 33%|███▎      | 1/3 [01:21<02:43, 81.94s/it][Warning]: datasets path /root/autodl-tmp/LIBERO/libero/libero/../datasets does not exist!
+[Warning]: datasets path /root/autodl-tmp/LIBERO/libero/libero/../datasets does not exist!
+
+  0%|          | 0/10 [00:00<?, ?it/s][AINFO:root:
+Task: pick up the black bowl next to the ramekin and place it on the plate
+INFO:root:Starting episode 1...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=11--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_p.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 11
+INFO:root:# successes: 11 (100.0%)
+
+ 10%|█         | 1/10 [00:06<00:57,  6.34s/it][AINFO:root:
+Task: pick up the black bowl next to the ramekin and place it on the plate
+INFO:root:Starting episode 2...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=12--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_p.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 12
+INFO:root:# successes: 12 (100.0%)
+
+ 20%|██        | 2/10 [00:12<00:48,  6.03s/it][AINFO:root:
+Task: pick up the black bowl next to the ramekin and place it on the plate
+INFO:root:Starting episode 3...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=13--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_p.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 13
+INFO:root:# successes: 13 (100.0%)
+
+ 30%|███       | 3/10 [00:18<00:42,  6.05s/it][AINFO:root:
+Task: pick up the black bowl next to the ramekin and place it on the plate
+INFO:root:Starting episode 4...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=14--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_p.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 14
+INFO:root:# successes: 14 (100.0%)
+
+ 40%|████      | 4/10 [00:23<00:35,  5.90s/it][AINFO:root:
+Task: pick up the black bowl next to the ramekin and place it on the plate
+INFO:root:Starting episode 5...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=15--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_p.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 15
+INFO:root:# successes: 15 (100.0%)
+
+ 50%|█████     | 5/10 [00:30<00:30,  6.02s/it][AINFO:root:
+Task: pick up the black bowl next to the ramekin and place it on the plate
+INFO:root:Starting episode 6...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=16--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_p.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 16
+INFO:root:# successes: 16 (100.0%)
+
+ 60%|██████    | 6/10 [00:35<00:23,  5.85s/it][AINFO:root:
+Task: pick up the black bowl next to the ramekin and place it on the plate
+INFO:root:Starting episode 7...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=17--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_p.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 17
+INFO:root:# successes: 17 (100.0%)
+
+ 70%|███████   | 7/10 [00:41<00:17,  5.94s/it][AINFO:root:
+Task: pick up the black bowl next to the ramekin and place it on the plate
+INFO:root:Starting episode 8...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=18--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_p.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 18
+INFO:root:# successes: 18 (100.0%)
+
+ 80%|████████  | 8/10 [00:47<00:11,  5.96s/it][AINFO:root:
+Task: pick up the black bowl next to the ramekin and place it on the plate
+INFO:root:Starting episode 9...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=19--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_p.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 19
+INFO:root:# successes: 19 (100.0%)
+
+ 90%|█████████ | 9/10 [00:53<00:05,  5.90s/it][AINFO:root:
+Task: pick up the black bowl next to the ramekin and place it on the plate
+INFO:root:Starting episode 10...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=20--success=True--task=pick_up_the_black_bowl_next_to_the_ramekin_and_p.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 20
+INFO:root:# successes: 20 (100.0%)
+
+100%|██████████| 10/10 [00:59<00:00,  6.07s/it][A100%|██████████| 10/10 [00:59<00:00,  6.00s/it]
+INFO:root:Current task success rate: 1.0
+INFO:root:Current total success rate: 1.0
+ 67%|██████▋   | 2/3 [02:22<01:09, 69.56s/it][Warning]: datasets path /root/autodl-tmp/LIBERO/libero/libero/../datasets does not exist!
+[Warning]: datasets path /root/autodl-tmp/LIBERO/libero/libero/../datasets does not exist!
+
+  0%|          | 0/10 [00:00<?, ?it/s][AINFO:root:
+Task: pick up the black bowl from table center and place it on the plate
+INFO:root:Starting episode 1...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=21--success=True--task=pick_up_the_black_bowl_from_table_center_and_pla.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 21
+INFO:root:# successes: 21 (100.0%)
+
+ 10%|█         | 1/10 [00:06<01:01,  6.87s/it][AINFO:root:
+Task: pick up the black bowl from table center and place it on the plate
+INFO:root:Starting episode 2...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=22--success=True--task=pick_up_the_black_bowl_from_table_center_and_pla.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 22
+INFO:root:# successes: 22 (100.0%)
+
+ 20%|██        | 2/10 [00:13<00:52,  6.60s/it][AINFO:root:
+Task: pick up the black bowl from table center and place it on the plate
+INFO:root:Starting episode 3...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=23--success=True--task=pick_up_the_black_bowl_from_table_center_and_pla.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 23
+INFO:root:# successes: 23 (100.0%)
+
+ 30%|███       | 3/10 [00:18<00:42,  6.12s/it][AINFO:root:
+Task: pick up the black bowl from table center and place it on the plate
+INFO:root:Starting episode 4...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=24--success=True--task=pick_up_the_black_bowl_from_table_center_and_pla.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 24
+INFO:root:# successes: 24 (100.0%)
+
+ 40%|████      | 4/10 [00:24<00:34,  5.77s/it][AINFO:root:
+Task: pick up the black bowl from table center and place it on the plate
+INFO:root:Starting episode 5...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=25--success=True--task=pick_up_the_black_bowl_from_table_center_and_pla.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 25
+INFO:root:# successes: 25 (100.0%)
+
+ 50%|█████     | 5/10 [00:30<00:29,  5.83s/it][AINFO:root:
+Task: pick up the black bowl from table center and place it on the plate
+INFO:root:Starting episode 6...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=26--success=True--task=pick_up_the_black_bowl_from_table_center_and_pla.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 26
+INFO:root:# successes: 26 (100.0%)
+
+ 60%|██████    | 6/10 [00:35<00:23,  5.80s/it][AINFO:root:
+Task: pick up the black bowl from table center and place it on the plate
+INFO:root:Starting episode 7...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=27--success=True--task=pick_up_the_black_bowl_from_table_center_and_pla.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 27
+INFO:root:# successes: 27 (100.0%)
+
+ 70%|███████   | 7/10 [00:41<00:17,  5.84s/it][AINFO:root:
+Task: pick up the black bowl from table center and place it on the plate
+INFO:root:Starting episode 8...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=28--success=True--task=pick_up_the_black_bowl_from_table_center_and_pla.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 28
+INFO:root:# successes: 28 (100.0%)
+
+ 80%|████████  | 8/10 [00:47<00:11,  5.76s/it][AINFO:root:
+Task: pick up the black bowl from table center and place it on the plate
+INFO:root:Starting episode 9...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=29--success=True--task=pick_up_the_black_bowl_from_table_center_and_pla.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 29
+INFO:root:# successes: 29 (100.0%)
+
+ 90%|█████████ | 9/10 [00:53<00:05,  5.90s/it][AINFO:root:
+Task: pick up the black bowl from table center and place it on the plate
+INFO:root:Starting episode 10...
+INFO:root:Saved rollout MP4 at path /root/autodl-tmp/experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=30--success=True--task=pick_up_the_black_bowl_from_table_center_and_pla.mp4
+INFO:root:Success: True
+INFO:root:# episodes completed so far: 30
+INFO:root:# successes: 30 (100.0%)
+
+100%|██████████| 10/10 [00:58<00:00,  5.71s/it][A100%|██████████| 10/10 [00:58<00:00,  5.88s/it]
+INFO:root:Current task success rate: 1.0
+INFO:root:Current total success rate: 1.0
+100%|██████████| 3/3 [03:22<00:00, 65.03s/it]100%|██████████| 3/3 [03:22<00:00, 67.49s/it]
+INFO:root:Total success rate: 1.0
+INFO:root:Total episodes: 30
+Exception ignored in: <function MjRenderContext.__del__ at 0x7f2c56dd44c0>
+Traceback (most recent call last):
+  File "/root/autodl-tmp/openpi/examples/libero/.venv/lib/python3.8/site-packages/robosuite/utils/binding_utils.py", line 199, in __del__
+    self.gl_ctx.free()
+  File "/root/autodl-tmp/openpi/examples/libero/.venv/lib/python3.8/site-packages/robosuite/renderers/context/egl_context.py", line 149, in free
+    EGL.eglMakeCurrent(EGL_DISPLAY, EGL.EGL_NO_SURFACE, EGL.EGL_NO_SURFACE, EGL.EGL_NO_CONTEXT)
+  File "/root/autodl-tmp/openpi/examples/libero/.venv/lib/python3.8/site-packages/OpenGL/error.py", line 230, in glCheckError
+    raise self._errorClass(
+OpenGL.raw.EGL._errors.EGLError: INFO:OpenGL.platform.ctypesloader:Failed to load library ( 'libGLU.so.0' ): libGLU.so.0: cannot open shared object file: No such file or directory
+EGLError(
+	err = EGL_NOT_INITIALIZED,
+	baseOperation = eglMakeCurrent,
+	cArguments = (
+		<OpenGL._opaque.EGLDisplay_pointer object at 0x7f2c007dabc0>,
+		<OpenGL._opaque.EGLSurface_pointer object at 0x7f2ce1c708c0>,
+		<OpenGL._opaque.EGLSurface_pointer object at 0x7f2ce1c708c0>,
+		<OpenGL._opaque.EGLContext_pointer object at 0x7f2ce1c70840>,
+	),
+	result = 0
+)
+Exception ignored in: <function EGLGLContext.__del__ at 0x7f2c56dd4310>
+Traceback (most recent call last):
+  File "/root/autodl-tmp/openpi/examples/libero/.venv/lib/python3.8/site-packages/robosuite/renderers/context/egl_context.py", line 155, in __del__
+    self.free()
+  File "/root/autodl-tmp/openpi/examples/libero/.venv/lib/python3.8/site-packages/robosuite/renderers/context/egl_context.py", line 149, in free
+    EGL.eglMakeCurrent(EGL_DISPLAY, EGL.EGL_NO_SURFACE, EGL.EGL_NO_SURFACE, EGL.EGL_NO_CONTEXT)
+  File "/root/autodl-tmp/openpi/examples/libero/.venv/lib/python3.8/site-packages/OpenGL/error.py", line 230, in glCheckError
+    raise self._errorClass(
+OpenGL.raw.EGL._errors.EGLError: EGLError(
+	err = EGL_NOT_INITIALIZED,
+	baseOperation = eglMakeCurrent,
+	cArguments = (
+		<OpenGL._opaque.EGLDisplay_pointer object at 0x7f2c007dabc0>,
+		<OpenGL._opaque.EGLSurface_pointer object at 0x7f2ce1c708c0>,
+		<OpenGL._opaque.EGLSurface_pointer object at 0x7f2ce1c708c0>,
+		<OpenGL._opaque.EGLContext_pointer object at 0x7f2ce1c70840>,
+	),
+	result = 0
+)

@@ -1,319 +1,0 @@
-2026-05-24 18:33:12.008537: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
-2026-05-24 18:33:12.046892: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:9261] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
-2026-05-24 18:33:12.046923: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:607] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
-2026-05-24 18:33:12.047992: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1515] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
-2026-05-24 18:33:12.053960: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2026-05-24 18:33:12.862401: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
-[robosuite WARNING] No private macro file found! (macros.py:53)
-[robosuite WARNING] It is recommended to use a private macro file (macros.py:54)
-[robosuite WARNING] To setup, run: python /root/miniconda3/envs/openvla/lib/python3.10/site-packages/robosuite/scripts/setup_macros.py (macros.py:55)
-Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
-Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
-See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
-<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
-[*] Instantiating Pretrained VLA model
-[*] Loading in BF16 with Flash-Attention Enabled
-Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:00,  3.54it/s]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:00<00:00,  4.34it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.78it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:00<00:00,  4.54it/s]
-<frozen importlib._bootstrap>:283: DeprecationWarning: the load_module() method is deprecated and slated for removal in Python 3.12; use exec_module() instead
-Loaded model: <class 'transformers_modules.openvla.openvla-7b.47a0ec7fc4ec123775a391911046cf33cf9ed83f.modeling_prismatic.OpenVLAForActionPrediction'>
-Logging to local log file: ./experiments/logs/EVAL-libero_spatial-openvla-2026_05_24-18_33_30--sweep-20260522-eval-S3k--exp-S3k.txt
-[info] using task orders [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-Task suite: libero_spatial (3/10 tasks)
-  0%|          | 0/3 [00:00<?, ?it/s][Warning]: datasets path /root/autodl-tmp/LIBERO/libero/libero/../datasets does not exist!
-[Warning]: datasets path /root/autodl-tmp/LIBERO/libero/libero/../datasets does not exist!
-
-  0%|          | 0/10 [00:00<?, ?it/s][A
- 10%|█         | 1/10 [01:23<12:28, 83.19s/it][A
- 20%|██        | 2/10 [02:46<11:07, 83.47s/it][A
- 30%|███       | 3/10 [04:09<09:41, 83.05s/it][A
- 40%|████      | 4/10 [05:32<08:17, 82.92s/it][A
- 50%|█████     | 5/10 [06:55<06:55, 83.01s/it][A
- 60%|██████    | 6/10 [08:17<05:30, 82.68s/it][A
- 70%|███████   | 7/10 [09:39<04:07, 82.57s/it][A
- 80%|████████  | 8/10 [11:01<02:44, 82.30s/it][A
- 90%|█████████ | 9/10 [12:24<01:22, 82.47s/it][A
-100%|██████████| 10/10 [13:46<00:00, 82.38s/it][A100%|██████████| 10/10 [13:46<00:00, 82.64s/it]
- 33%|███▎      | 1/3 [13:47<27:35, 827.81s/it]
-Task: pick up the black bowl between the plate and the ramekin and place it on the plate
-Starting episode 1...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=1--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4
-Success: False
-# episodes completed so far: 1
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl between the plate and the ramekin and place it on the plate
-Starting episode 2...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=2--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4
-Success: False
-# episodes completed so far: 2
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl between the plate and the ramekin and place it on the plate
-Starting episode 3...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=3--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4
-Success: False
-# episodes completed so far: 3
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl between the plate and the ramekin and place it on the plate
-Starting episode 4...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=4--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4
-Success: False
-# episodes completed so far: 4
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl between the plate and the ramekin and place it on the plate
-Starting episode 5...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=5--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4
-Success: False
-# episodes completed so far: 5
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl between the plate and the ramekin and place it on the plate
-Starting episode 6...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=6--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4
-Success: False
-# episodes completed so far: 6
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl between the plate and the ramekin and place it on the plate
-Starting episode 7...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=7--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4
-Success: False
-# episodes completed so far: 7
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl between the plate and the ramekin and place it on the plate
-Starting episode 8...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=8--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4
-Success: False
-# episodes completed so far: 8
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl between the plate and the ramekin and place it on the plate
-Starting episode 9...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=9--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4
-Success: False
-# episodes completed so far: 9
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl between the plate and the ramekin and place it on the plate
-Starting episode 10...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=10--success=False--task=pick_up_the_black_bowl_between_the_plate_and_the_r.mp4
-Success: False
-# episodes completed so far: 10
-# successes: 0 (0.0%)
-Current task success rate: 0.0
-Current total success rate: 0.0
-[Warning]: datasets path /root/autodl-tmp/LIBERO/libero/libero/../datasets does not exist!
-[Warning]: datasets path /root/autodl-tmp/LIBERO/libero/libero/../datasets does not exist!
-
-  0%|          | 0/10 [00:00<?, ?it/s][A
- 10%|█         | 1/10 [01:22<12:20, 82.26s/it][A
- 20%|██        | 2/10 [02:45<11:03, 82.88s/it][A
- 30%|███       | 3/10 [04:07<09:37, 82.51s/it][A
- 40%|████      | 4/10 [05:29<08:12, 82.06s/it][A
- 50%|█████     | 5/10 [06:51<06:50, 82.17s/it][A
- 60%|██████    | 6/10 [08:13<05:28, 82.16s/it][A
- 70%|███████   | 7/10 [09:35<04:06, 82.11s/it][A
- 80%|████████  | 8/10 [10:58<02:44, 82.31s/it][A
- 90%|█████████ | 9/10 [12:20<01:22, 82.20s/it][A
-100%|██████████| 10/10 [13:43<00:00, 82.48s/it][A100%|██████████| 10/10 [13:43<00:00, 82.33s/it]
- 67%|██████▋   | 2/3 [27:32<13:45, 825.68s/it]
-Task: pick up the black bowl next to the ramekin and place it on the plate
-Starting episode 1...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=11--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4
-Success: False
-# episodes completed so far: 11
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl next to the ramekin and place it on the plate
-Starting episode 2...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=12--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4
-Success: False
-# episodes completed so far: 12
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl next to the ramekin and place it on the plate
-Starting episode 3...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=13--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4
-Success: False
-# episodes completed so far: 13
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl next to the ramekin and place it on the plate
-Starting episode 4...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=14--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4
-Success: False
-# episodes completed so far: 14
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl next to the ramekin and place it on the plate
-Starting episode 5...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=15--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4
-Success: False
-# episodes completed so far: 15
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl next to the ramekin and place it on the plate
-Starting episode 6...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=16--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4
-Success: False
-# episodes completed so far: 16
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl next to the ramekin and place it on the plate
-Starting episode 7...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=17--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4
-Success: False
-# episodes completed so far: 17
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl next to the ramekin and place it on the plate
-Starting episode 8...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=18--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4
-Success: False
-# episodes completed so far: 18
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl next to the ramekin and place it on the plate
-Starting episode 9...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=19--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4
-Success: False
-# episodes completed so far: 19
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl next to the ramekin and place it on the plate
-Starting episode 10...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=20--success=False--task=pick_up_the_black_bowl_next_to_the_ramekin_and_pla.mp4
-Success: False
-# episodes completed so far: 20
-# successes: 0 (0.0%)
-Current task success rate: 0.0
-Current total success rate: 0.0
-[Warning]: datasets path /root/autodl-tmp/LIBERO/libero/libero/../datasets does not exist!
-[Warning]: datasets path /root/autodl-tmp/LIBERO/libero/libero/../datasets does not exist!
-
-  0%|          | 0/10 [00:00<?, ?it/s][A
- 10%|█         | 1/10 [01:22<12:18, 82.10s/it][A
- 20%|██        | 2/10 [02:44<11:00, 82.55s/it][A
- 30%|███       | 3/10 [04:08<09:39, 82.83s/it][A
- 40%|████      | 4/10 [05:30<08:16, 82.73s/it][A
- 50%|█████     | 5/10 [06:53<06:53, 82.67s/it][A
- 60%|██████    | 6/10 [08:16<05:30, 82.69s/it][A
- 70%|███████   | 7/10 [09:38<04:07, 82.55s/it][A
- 80%|████████  | 8/10 [11:00<02:44, 82.50s/it][A
- 90%|█████████ | 9/10 [12:23<01:22, 82.46s/it][A
-100%|██████████| 10/10 [13:45<00:00, 82.49s/it][A100%|██████████| 10/10 [13:45<00:00, 82.56s/it]
-100%|██████████| 3/3 [41:18<00:00, 826.04s/it]100%|██████████| 3/3 [41:18<00:00, 826.16s/it]
-
-Task: pick up the black bowl from table center and place it on the plate
-Starting episode 1...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=21--success=False--task=pick_up_the_black_bowl_from_table_center_and_place.mp4
-Success: False
-# episodes completed so far: 21
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl from table center and place it on the plate
-Starting episode 2...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=22--success=False--task=pick_up_the_black_bowl_from_table_center_and_place.mp4
-Success: False
-# episodes completed so far: 22
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl from table center and place it on the plate
-Starting episode 3...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=23--success=False--task=pick_up_the_black_bowl_from_table_center_and_place.mp4
-Success: False
-# episodes completed so far: 23
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl from table center and place it on the plate
-Starting episode 4...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=24--success=False--task=pick_up_the_black_bowl_from_table_center_and_place.mp4
-Success: False
-# episodes completed so far: 24
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl from table center and place it on the plate
-Starting episode 5...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=25--success=False--task=pick_up_the_black_bowl_from_table_center_and_place.mp4
-Success: False
-# episodes completed so far: 25
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl from table center and place it on the plate
-Starting episode 6...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=26--success=False--task=pick_up_the_black_bowl_from_table_center_and_place.mp4
-Success: False
-# episodes completed so far: 26
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl from table center and place it on the plate
-Starting episode 7...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=27--success=False--task=pick_up_the_black_bowl_from_table_center_and_place.mp4
-Success: False
-# episodes completed so far: 27
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl from table center and place it on the plate
-Starting episode 8...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=28--success=False--task=pick_up_the_black_bowl_from_table_center_and_place.mp4
-Success: False
-# episodes completed so far: 28
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl from table center and place it on the plate
-Starting episode 9...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=29--success=False--task=pick_up_the_black_bowl_from_table_center_and_place.mp4
-Success: False
-# episodes completed so far: 29
-# successes: 0 (0.0%)
-
-Task: pick up the black bowl from table center and place it on the plate
-Starting episode 10...
-Saved rollout MP4 at path ./rollouts/2026_05_24/2026_05_24-18_33_30--episode=30--success=False--task=pick_up_the_black_bowl_from_table_center_and_place.mp4
-Success: False
-# episodes completed so far: 30
-# successes: 0 (0.0%)
-Current task success rate: 0.0
-Current total success rate: 0.0
-Exception ignored in: <function MjRenderContext.__del__ at 0x7fe3bb12f010>
-Traceback (most recent call last):
-  File "/root/miniconda3/envs/openvla/lib/python3.10/site-packages/robosuite/utils/binding_utils.py", line 199, in __del__
-    self.gl_ctx.free()
-  File "/root/miniconda3/envs/openvla/lib/python3.10/site-packages/robosuite/renderers/context/egl_context.py", line 149, in free
-    EGL.eglMakeCurrent(EGL_DISPLAY, EGL.EGL_NO_SURFACE, EGL.EGL_NO_SURFACE, EGL.EGL_NO_CONTEXT)
-  File "/root/miniconda3/envs/openvla/lib/python3.10/site-packages/OpenGL/error.py", line 230, in glCheckError
-    raise self._errorClass(
-OpenGL.raw.EGL._errors.EGLError: EGLError(
-	err = EGL_NOT_INITIALIZED,
-	baseOperation = eglMakeCurrent,
-	cArguments = (
-		<OpenGL._opaque.EGLDisplay_pointer object at 0x7fe2f4d365c0>,
-		<OpenGL._opaque.EGLSurface_pointer object at 0x7fe3c965bf40>,
-		<OpenGL._opaque.EGLSurface_pointer object at 0x7fe3c965bf40>,
-		<OpenGL._opaque.EGLContext_pointer object at 0x7fe3c965bec0>,
-	),
-	result = 0
-)
-Exception ignored in: <function EGLGLContext.__del__ at 0x7fe3bb12ee60>
-Traceback (most recent call last):
-  File "/root/miniconda3/envs/openvla/lib/python3.10/site-packages/robosuite/renderers/context/egl_context.py", line 155, in __del__
-    self.free()
-  File "/root/miniconda3/envs/openvla/lib/python3.10/site-packages/robosuite/renderers/context/egl_context.py", line 149, in free
-    EGL.eglMakeCurrent(EGL_DISPLAY, EGL.EGL_NO_SURFACE, EGL.EGL_NO_SURFACE, EGL.EGL_NO_CONTEXT)
-  File "/root/miniconda3/envs/openvla/lib/python3.10/site-packages/OpenGL/error.py", line 230, in glCheckError
-    raise self._errorClass(
-OpenGL.raw.EGL._errors.EGLError: EGLError(
-	err = EGL_NOT_INITIALIZED,
-	baseOperation = eglMakeCurrent,
-	cArguments = (
-		<OpenGL._opaque.EGLDisplay_pointer object at 0x7fe2f4d365c0>,
-		<OpenGL._opaque.EGLSurface_pointer object at 0x7fe3c965bf40>,
-		<OpenGL._opaque.EGLSurface_pointer object at 0x7fe3c965bf40>,
-		<OpenGL._opaque.EGLContext_pointer object at 0x7fe3c965bec0>,
-	),
-	result = 0
-)

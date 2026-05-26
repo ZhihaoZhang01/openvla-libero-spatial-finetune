@@ -1,1 +1,0 @@
-/root/autodl-tmp/checkpoints/openvla-7b+libero_spatial_no_noops+b16+lr-0.0005+lora-r32+dropout-0.0--exp-S3k--image_aug

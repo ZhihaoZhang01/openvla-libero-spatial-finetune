@@ -1,6 +1,6 @@
-# OpenVLA × LIBERO-Spatial LoRA 微调与消融实验
+# OpenVLA × LIBERO-Spatial LoRA 微调与 π₀.₅ 横向对比
 
-在 [OpenVLA-7B](https://github.com/openvla/openvla) 上对 **LIBERO-Spatial** 进行 LoRA 微调，完成 5 组超参消融训练，并在仿真中评测。本仓库包含 **补丁**、**自动化脚本**、**实验日志** 与 **rollout 视频**，**不包含**完整上游 OpenVLA 代码树。
+在 [OpenVLA-7B](https://github.com/openvla/openvla) 上对 **LIBERO-Spatial** 进行 LoRA 微调，完成 5 组超参消融训练，并在仿真中评测；同时接入 [Physical Intelligence OpenPI](https://github.com/Physical-Intelligence/openpi) 官方 **π₀.₅-LIBERO**  checkpoint 作**同协议横向对比**。本仓库包含 **补丁**、**自动化脚本**、**实验日志** 与 **rollout 视频**，**不包含**完整上游 OpenVLA / OpenPI 代码树。
 
 **仓库地址：** [github.com/ZhihaoZhang01/openvla-libero-spatial-finetune](https://github.com/ZhihaoZhang01/openvla-libero-spatial-finetune)
 
@@ -16,20 +16,35 @@
 | 基准任务 | LIBERO-Spatial（`libero_spatial_no_noops`） |
 | 微调方式 | LoRA（`rank=32`，`lr=5e-4`，`batch=16`） |
 | 训练硬件 | NVIDIA A800 80GB（AutoDL） |
-| 最优配置 | **S10k** — 10000 step，`dropout=0.1`，关闭图像增强 |
-| 评测协议 | 前 **3 个任务** × 每任务 **10 次 trial** = 每模型 30 个 episode |
+| OpenVLA 最优 | **S10k** — 10000 step，`dropout=0.1`，关闭图像增强 |
+| 横向基线 | **π₀.₅-LIBERO**（OpenPI 官方 checkpoint，`pi05_libero`） |
+| 评测协议 | 前 **3 个任务** × 每任务 **10 次 trial** = 每模型 **30** 个 episode |
 
-### 仿真成功率（评测批次 `20260522-eval`）
+### 仿真成功率（同协议：3 任务 × 10 trials）
 
-| 排名 | 配置 | 训练步数 | Dropout | 图像增强 | 总成功率 |
-|------|------|----------|---------|----------|----------|
-| 1 | **S10k** | 10000 | 0.1 | 关 | **70.0%**（21/30） |
-| 2 | **A-F** | 6500 | 0.0 | 关 | **50.0%**（15/30） |
-| 3 | D1 | 6500 | 0.1 | 开 | 26.7%（8/30） |
-| 4 | D0 | 6500 | 0.0 | 开 | 16.7%（5/30） |
-| 5 | S3k | 3000 | 0.0 | 开 | 0.0%（0/30） |
+| 排名 | 模型 | 类型 | 训练步数 | Dropout | 图像增强 | 总成功率 |
+|------|------|------|----------|---------|----------|----------|
+| 1 | **π₀.₅-LIBERO** | OpenPI 官方微调 | — | — | — | **100%**（30/30） |
+| 2 | **S10k** | OpenVLA LoRA | 10000 | 0.1 | 关 | **70.0%**（21/30） |
+| 3 | **A-F** | OpenVLA LoRA | 6500 | 0.0 | 关 | **50.0%**（15/30） |
+| 4 | D1 | OpenVLA LoRA | 6500 | 0.1 | 开 | 26.7%（8/30） |
+| 5 | D0 | OpenVLA LoRA | 6500 | 0.0 | 开 | 16.7%（5/30） |
+| 6 | S3k | OpenVLA LoRA | 3000 | 0.0 | 开 | 0.0%（0/30） |
 
-分任务明细见 [`experiments/REPORT_libero_spatial_sweep_20260522.md`](experiments/REPORT_libero_spatial_sweep_20260522.md) 与 [`experiments/results.csv`](experiments/results.csv)。
+- OpenVLA 批次：`20260522-eval` · π₀.₅ 批次：`20260526-200803-pi05`
+- 分任务明细见 [`experiments/REPORT_libero_spatial_sweep_20260522.md`](experiments/REPORT_libero_spatial_sweep_20260522.md) 与 [`experiments/results.csv`](experiments/results.csv)
+
+### OpenVLA LoRA vs π₀.₅-LIBERO（简要对比）
+
+| 维度 | OpenVLA（本仓库 S10k） | π₀.₅-LIBERO（OpenPI 官方） |
+|------|------------------------|----------------------------|
+| 架构 | 7B VLA + LoRA 微调 | ~3.3B π₀.₅ + LIBERO 全量微调 |
+| 观测 | 单相机 + `center_crop` 策略因配置而异 | **双相机**（agentview + wrist） |
+| 动作 | 逐步离散 token 反量化 | **action chunk**（默认 replan 每 5 步） |
+| 本协议 3×10 成功率 | **70%** | **100%** |
+| 训练成本 | 单卡 A800，~数小时 LoRA | 官方预训练权重，本地仅推理评测 |
+
+**解读：** 在**相同 3 个 spatial 任务、相同 trial 数**下，π₀.₅ 显著高于本组 OpenVLA LoRA 最优（S10k）。差距来自模型容量、官方 LIBERO 专用训练、双相机与 chunk 策略等，**不宜**与 OpenPI 论文中 **全套 10 任务 × 50 trials** 的 numbers 直接对比。本仓库价值在于：**固定子集协议**下，LoRA 消融结论（aug / dropout / 步数）与强基线的相对位置。
 
 ---
 
@@ -137,6 +152,31 @@
 
 ---
 
+## 阶段四：π₀.₅-LIBERO 横向评测（OpenPI）
+
+评测批次：`20260526-200803-pi05` · 权重：`gs://openpi-assets/checkpoints/pi05_libero`（国内可用 [HF 镜像 `bf-jeon/pi05_libero`](https://hf-mirror.com/bf-jeon/pi05_libero) + `scripts/eval/download_pi05_libero_hf.sh`）
+
+### Rollout 演示（任务 0，10/10 成功）
+
+![π₀.₅ 任务0 成功](experiments/assets/gifs/pi05_task0_success.gif)
+
+[▶ 观看 MP4 原片](experiments/rollouts_pi05/2026_05_26/2026_05_26-20_08_20--episode=1--success=True--task=pick_up_the_black_bowl_between_the_plate_and_the.mp4)
+
+*三任务各 10 trial 全部成功；完整 30 个 MP4 见 [`experiments/rollouts_pi05/2026_05_26/`](experiments/rollouts_pi05/2026_05_26/)。*
+
+### 复现（OpenPI，与 OpenVLA 环境分离）
+
+```bash
+git clone https://github.com/Physical-Intelligence/openpi.git
+# 打补丁 + uv 环境见 patches/openpi/README.md
+bash scripts/eval/setup_openpi_libero.sh
+export HF_ENDPOINT=https://hf-mirror.com   # 可选：加速权重下载
+bash scripts/eval/download_pi05_libero_hf.sh
+bash scripts/eval/eval_pi05_libero.sh      # 默认 NUM_TASKS=3 NUM_TRIALS=10
+```
+
+---
+
 ## 失败模式与原因分析
 
 对 `20260522-eval` 共 **150** 个 rollout 逐条回看后，失败可归纳为以下几类（**常叠加出现**）。自动成功率与**人眼观感**差距明显。
@@ -190,11 +230,15 @@
 | 任务 1 自动成功率高 | 场景简单；失败多为抖动或放置偏移 |
 | W&B loss 好 ≠ 仿真好 | 以 rollout 为准；需区分「夹取失败」与「放置失败」 |
 
-### 6. 小结
+### 6. 与 π₀.₅ 的差距（横向）
+
+在本协议下 OpenVLA 仍常见 **放置失败** 与 **抖动**，而 π₀.₅ 在相同 3 任务上 **30/30 成功**。说明：在 LIBERO-Spatial 子集上，**LoRA 微调 7B OpenVLA** 尚未接近 **专用训练的 π₀.₅**；若要以仿真成功率为目标，需更大训练预算、观测对齐（多相机 / chunk）或更强基座，而非仅调 LoRA 超参。
+
+### 7. 小结
 
 - **主要瓶颈：** ① 无效/不完整操作技能（S3k）② 末端抖动（D0/D1）③ **夹取成功、放置失败**（各模型普遍）。
-- **S10k** 在三类问题上均最好，但任务 2 仍有约一半失败。
-- **改进方向：** 动作平滑、placement 阶段数据增强或更长训练、分阶段评测（grasp / place）、全套 10 任务 × 更多 trial。
+- **S10k** 在 OpenVLA 组内最好（70%），但远低于 π₀.₅（100%）于本协议。
+- **改进方向：** 动作平滑、placement 阶段强化、观测与 action chunk 对齐、全套 10 任务 × 更多 trial。
 
 > 完整数据：[`experiments/REPORT_libero_spatial_sweep_20260522.md`](experiments/REPORT_libero_spatial_sweep_20260522.md)
 
@@ -203,18 +247,25 @@
 ## 仓库结构
 
 ```
-├── patches/openvla/          # finetune.py、run_libero_eval.py 补丁
-├── scripts/                  # 训练 / 评测 / sweep
+├── patches/
+│   ├── openvla/              # finetune.py、run_libero_eval.py
+│   └── openpi/               # LIBERO 评测客户端补丁
+├── scripts/
+│   ├── train/ eval/ exp/    # OpenVLA 训练与 sweep
+│   └── eval/
+│       ├── eval_pi05_libero.sh
+│       ├── setup_openpi_libero.sh
+│       └── download_pi05_libero_hf.sh
 ├── experiments/
-│   ├── assets/gifs/          # README 用 GIF 预览（由 MP4 生成）
-│   ├── rollouts/2026_05_24/  # 150 个评测 MP4
-│   ├── demos/                # quick_start MP4
-│   ├── assets/training_curves/  # W&B 截图占位
+│   ├── assets/gifs/          # README GIF 预览
+│   ├── rollouts/2026_05_24/  # OpenVLA 150 个 MP4
+│   ├── rollouts_pi05/        # π₀.₅ 30 个 MP4
+│   ├── eval_logs/            # 评测文本日志
 │   └── results.csv
 └── run/
 ```
 
-**不在本仓库：** `openvla/`、`LIBERO/`、`dlimp/`、数据集、LoRA 权重（~465MB/个）。
+**不在本仓库：** `openvla/`、`openpi/`、`LIBERO/`、`dlimp/`、数据集、checkpoint 权重。
 
 ---
 
@@ -261,8 +312,10 @@ EVAL_ONLY=1  SWEEP_RUN_ID=my-eval  bash scripts/exp/run_libero_sweep.sh
 ## 致谢
 
 - [openvla/openvla](https://github.com/openvla/openvla)
+- [Physical-Intelligence/openpi](https://github.com/Physical-Intelligence/openpi)
 - [Lifelong-Robot-Learning/LIBERO](https://github.com/Lifelong-Robot-Learning/LIBERO)
 - [Escapist-coder/OpenVLA-Libero-Reproduction-Finetune](https://github.com/Escapist-coder/OpenVLA-Libero-Reproduction-Finetune)
+- π₀.₅ 权重镜像：[bf-jeon/pi05_libero](https://huggingface.co/bf-jeon/pi05_libero)（社区上传，OpenPI JAX 格式）
 
 ---
 

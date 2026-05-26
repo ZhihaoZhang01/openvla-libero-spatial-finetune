@@ -4,8 +4,18 @@
 
 # ========== 不上传：第三方完整仓库（仅根目录）==========
 /openvla/
+/openpi/
+/openpi_cache/
 /LIBERO/
 /dlimp/
+.openpi_libero_setup_done
+/vendor/
+experiments/runs/pi05-*.log
+experiments/runs/pi05-download-monitor.*
+experiments/runs/pi05-policy-server.log
+experiments/runs/pi05-eval-nohup.log
+experiments/runs/20260526-192106-pi05/
+experiments/runs/20260526-200715-pi05/
 
 # ========== 不上传：大文件 / 本地缓存 ==========
 hf_cache/

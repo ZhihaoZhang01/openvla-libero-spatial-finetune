@@ -1,0 +1,104 @@
+INFO:root:Loading model...
+INFO:2026-05-26 20:08:08,803:jax._src.xla_bridge:925: Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+INFO:jax._src.xla_bridge:Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+INFO:2026-05-26 20:08:08,804:jax._src.xla_bridge:925: Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+INFO:jax._src.xla_bridge:Unable to initialize backend 'tpu': INTERNAL: Failed to open libtpu.so: libtpu.so: cannot open shared object file: No such file or directory
+INFO:absl:orbax-checkpoint version: 0.11.13
+INFO:absl:Created BasePyTreeCheckpointHandler: use_ocdbt=True, use_zarr3=False, pytree_metadata_options=PyTreeMetadataOptions(support_rich_types=False), array_metadata_store=<orbax.checkpoint._src.metadata.array_metadata_store.Store object at 0x7f3b5eac5e10>
+INFO:absl:Restoring checkpoint from /root/autodl-tmp/openpi_cache/openpi-assets/checkpoints/pi05_libero/params.
+INFO:absl:[thread=MainThread] Failed to get flag value for EXPERIMENTAL_ORBAX_USE_DISTRIBUTED_PROCESS_ID.
+INFO:absl:[process=0] /jax/checkpoint/read/bytes_per_sec: 982.7 MiB/s (total bytes: 6.2 GiB) (time elapsed: 6 seconds) (per-host)
+INFO:absl:Finished restoring checkpoint in 6.51 seconds from /root/autodl-tmp/openpi_cache/openpi-assets/checkpoints/pi05_libero/params.
+INFO:root:Norm stats not found in /root/autodl-tmp/openpi/assets/pi05_libero/physical-intelligence/libero, skipping.
+INFO:root:Loaded norm stats from /root/autodl-tmp/openpi_cache/openpi-assets/checkpoints/pi05_libero/assets/physical-intelligence/libero
+INFO:root:Creating server (host: autodl-container-c4f24fa8a4-9be16d07, ip: 127.0.0.1)
+INFO:websockets.server:server listening on 0.0.0.0:8000
+ERROR:websockets.server:opening handshake failed
+Traceback (most recent call last):
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/http11.py", line 138, in parse
+    request_line = yield from parse_line(read_line)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/http11.py", line 309, in parse_line
+    line = yield from read_line(MAX_LINE_LENGTH)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/streams.py", line 46, in read_line
+    raise EOFError(f"stream ends after {p} bytes, before end of line")
+EOFError: stream ends after 0 bytes, before end of line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/server.py", line 545, in parse
+    request = yield from Request.parse(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/http11.py", line 140, in parse
+    raise EOFError("connection closed while reading HTTP request line") from exc
+EOFError: connection closed while reading HTTP request line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
+INFO:websockets.server:connection open
+INFO:openpi.serving.websocket_policy_server:Connection from ('127.0.0.1', 43074) opened
+INFO:websockets.server:connection rejected (426 Upgrade Required)
+ERROR:websockets.server:opening handshake failed
+Traceback (most recent call last):
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/server.py", line 138, in accept
+    ) = self.process_request(request)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/server.py", line 233, in process_request
+    raise InvalidUpgrade(
+websockets.exceptions.InvalidUpgrade: invalid Connection header: keep-alive
+INFO:websockets.server:connection rejected (426 Upgrade Required)
+ERROR:websockets.server:opening handshake failed
+Traceback (most recent call last):
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/server.py", line 138, in accept
+    ) = self.process_request(request)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/server.py", line 233, in process_request
+    raise InvalidUpgrade(
+websockets.exceptions.InvalidUpgrade: invalid Connection header: keep-alive
+ERROR:websockets.server:opening handshake failed
+Traceback (most recent call last):
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/http11.py", line 138, in parse
+    request_line = yield from parse_line(read_line)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/http11.py", line 309, in parse_line
+    line = yield from read_line(MAX_LINE_LENGTH)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/streams.py", line 46, in read_line
+    raise EOFError(f"stream ends after {p} bytes, before end of line")
+EOFError: stream ends after 0 bytes, before end of line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/server.py", line 545, in parse
+    request = yield from Request.parse(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/http11.py", line 140, in parse
+    raise EOFError("connection closed while reading HTTP request line") from exc
+EOFError: connection closed while reading HTTP request line
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/asyncio/server.py", line 356, in conn_handler
+    await connection.handshake(
+  File "/root/autodl-tmp/openpi/.venv/lib/python3.11/site-packages/websockets/asyncio/server.py", line 207, in handshake
+    raise self.protocol.handshake_exc
+websockets.exceptions.InvalidMessage: did not receive a valid HTTP request
+INFO:openpi.serving.websocket_policy_server:Connection from ('127.0.0.1', 43074) closed
