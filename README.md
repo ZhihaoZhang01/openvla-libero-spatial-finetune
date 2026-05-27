@@ -23,7 +23,7 @@
 
 本仓库对比的两条 VLA（Vision-Language-Action）路线：**OpenVLA**（本实验 LoRA 微调）与 **π₀.₅**（OpenPI 官方 LIBERO 权重）。二者都是「图像 + 语言指令 → 机器人动作」，但架构与动作生成方式不同。
 
-### OpenVLA-7B（本仓库微调对象）
+### OpenVLA-7B
 
 ![OpenVLA 架构示意](experiments/assets/diagrams/openvla_architecture.png)
 
@@ -37,7 +37,7 @@
 
 *示意图来源：OpenVLA 论文 / 官方介绍；本实验未改动上述主干结构，仅微调 LoRA 适配器。*
 
-### π₀.₅（Physical Intelligence，横向基线 `pi05_libero`）
+### π₀.₅
 
 ![π₀.₅ VLA 架构示意](experiments/assets/diagrams/pi05_vla_architecture.png)
 
@@ -52,7 +52,7 @@
 
 *示意图来源：Physical Intelligence π₀ / π₀.₅ 技术介绍；本仓库仅加载官方 checkpoint 做同协议评测，未重新训练。*
 
-### 结构差异（为何横向对比需说明协议）
+### 结构差异
 
 | 对比项 | OpenVLA | π₀.₅ |
 |--------|---------|------|
