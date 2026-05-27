@@ -19,6 +19,49 @@
 | 横向比对| **π₀.₅-LIBERO**（OpenPI 官方 checkpoint，`pi05_libero`） |
 | 评测协议 | 前 **3 个任务** × 每任务 **10 次 trial** = 每模型 **30** 个 episode |
 
+## 模型结构
+
+本仓库对比的两条 VLA（Vision-Language-Action）路线：**OpenVLA**（本实验 LoRA 微调）与 **π₀.₅**（OpenPI 官方 LIBERO 权重）。二者都是「图像 + 语言指令 → 机器人动作」，但架构与动作生成方式不同。
+
+### OpenVLA-7B（本仓库微调对象）
+
+![OpenVLA 架构示意](experiments/assets/diagrams/openvla_architecture.png)
+
+| 模块 | 说明 |
+|------|------|
+| **视觉** | **DINOv2** + **SigLIP** 双编码器 → MLP Projector → 视觉 token |
+| **语言** | 指令填入模板 `What should the robot do to {task}? A:` → **Llama Tokenizer** |
+| **主干** | **Llama 2 7B**，融合视觉 token 与语言 token |
+| **动作** | 输出离散 **Action Token** → Action De-Tokenizer → **7D 连续动作**（Δx, Δθ, ΔGrip 等） |
+| **本仓库** | 在 LIBERO-Spatial 上对 Llama 侧做 **LoRA**（rank=32），单相机观测、逐步预测 |
+
+*示意图来源：OpenVLA 论文 / 官方介绍；本实验未改动上述主干结构，仅微调 LoRA 适配器。*
+
+### π₀.₅（Physical Intelligence，横向基线 `pi05_libero`）
+
+![π₀.₅ VLA 架构示意](experiments/assets/diagrams/pi05_vla_architecture.png)
+
+| 模块 | 说明 |
+|------|------|
+| **预训练 VLM** | **SigLIP（~400M）** 视觉编码 + **Gemma（~2.6B）** 语言模型 |
+| **视觉输入** | 多视角图像（本评测为 **agentview + wrist** 双相机）经 ViT 编码 |
+| **语言输入** | 自然语言任务描述（如 pick/place 指令） |
+| **Action Expert** | **~300M** 动作专家；结合机器人状态 **qₜ** 与 **flow matching / 扩散式** 去噪生成动作序列 |
+| **输出** | 一段 **action chunk**：{aₜ, aₜ₊₁, …, aₜ₊H}，再下发仿真（默认每 5 步重规划） |
+| **训练数据** | π 数据集、互联网预训练、OXE 等；`pi05_libero` 为在 LIBERO 上进一步微调后的推理权重 |
+
+*示意图来源：Physical Intelligence π₀ / π₀.₅ 技术介绍；本仓库仅加载官方 checkpoint 做同协议评测，未重新训练。*
+
+### 结构差异（为何横向对比需说明协议）
+
+| 对比项 | OpenVLA | π₀.₅ |
+|--------|---------|------|
+| 参数量级 | ~7B（Llama 主干） | ~3.3B（Gemma + Expert） |
+| 视觉编码 | DINOv2 + SigLIP | SigLIP（多视角 ViT） |
+| 动作表示 | 离散 token → 7D 向量 | 连续 chunk + flow matching |
+| 相机 | 评测多为单视角 | 双相机 |
+| 本仓库角色 | LoRA 消融训练 + 评测 | 官方权重推理评测 |
+
 ### 仿真成功率（同协议：3 任务 × 10 trials）
 
 | 排名 | 模型 | 类型 | 训练步数 | Dropout | 图像增强 | 总成功率 |
@@ -256,6 +299,7 @@ bash scripts/eval/eval_pi05_libero.sh      # 默认 NUM_TASKS=3 NUM_TRIALS=10
 │       ├── setup_openpi_libero.sh
 │       └── download_pi05_libero_hf.sh
 ├── experiments/
+│   ├── assets/diagrams/      # OpenVLA / π₀.₅ 结构示意图
 │   ├── assets/gifs/          # README GIF 预览
 │   ├── rollouts/2026_05_24/  # OpenVLA 150 个 MP4
 │   ├── rollouts_pi05/        # π₀.₅ 30 个 MP4
